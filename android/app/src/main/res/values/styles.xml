@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Tema de lançamento para a Splash Screen -->
+    <style name="LaunchTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="android:windowBackground">@drawable/splash_screen_background</item> <!-- Define o fundo da Splash Screen -->
+        <item name="android:windowFullscreen">true</item> <!-- Tela cheia -->
+        <item name="android:statusBarColor">@android:color/transparent</item> <!-- Torna a barra de status transparente -->
+    </style>
+
+    <!-- Tema padrão do Flutter -->
+    <style name="NormalTheme" parent="@android:style/Theme.Light.NoTitleBar">
+        <!-- Defina as configurações do seu tema normal aqui -->
+    </style>
+</resources>
+
