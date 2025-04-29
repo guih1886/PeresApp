@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:pi_desenv_mobile/screens/home_screen.dart';
+import 'package:pi_desenv_mobile/screens/ofertas/oferta_screen.dart';
 
 void main() {
   runApp(const MyApp());
@@ -10,10 +11,21 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
+    var fontSize = MediaQuery.of(context).textScaler.scale(16);
+    
+    return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: HomeScreen()
+      home: HomeScreen(fontSize: fontSize,),
+      routes: {
+        "/ofertas": (context) => OfertaScreen(fontSize: fontSize),
+        "/produtos": (context) => OfertaScreen(fontSize: fontSize),
+        "/sobre": (context) => OfertaScreen(fontSize: fontSize),
+        "/disponibilidade": (context) => OfertaScreen(fontSize: fontSize),
+        "/contato": (context) => OfertaScreen(fontSize: fontSize),
+        "/suporte": (context) => OfertaScreen(fontSize: fontSize),
+      },
     );
+
   }
 }
 

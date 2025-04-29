@@ -3,7 +3,7 @@ import 'package:pi_desenv_mobile/models/oferta_model.dart';
 import 'package:intl/intl.dart';
 import 'package:pi_desenv_mobile/services/produto_service.dart';
 
-import '../models/produto_model.dart';
+import '../../models/produto_model.dart';
 
 class DetalheOfertaScreen extends StatefulWidget {
   final OfertaModel oferta;
@@ -47,8 +47,12 @@ class _DetalheOfertaScreenState extends State<DetalheOfertaScreen> {
       child: Expanded(
         child: Scaffold(
           appBar: AppBar(
-            title: Text(widget.oferta.descricao),
-            backgroundColor: const Color.fromRGBO(255, 200, 255, 0.5),
+            title: Text(
+              widget.oferta.descricao,
+              style: const TextStyle(color: Colors.white),
+            ),
+            backgroundColor: const Color(0xFF203A43),
+            iconTheme: const IconThemeData(color: Colors.white, size: 35),
           ),
           body: (produtos == null || produtos!.isEmpty)
               ? const Center(child: CircularProgressIndicator())

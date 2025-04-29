@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:pi_desenv_mobile/components/barra_navegacao.dart';
-import 'package:pi_desenv_mobile/screens/oferta_screen.dart';
+import 'package:pi_desenv_mobile/components/home/home_menu_lateral.dart';
 
 class HomeScreen extends StatefulWidget {
-  const HomeScreen({super.key});
+  final double fontSize;
+  const HomeScreen({super.key, required this.fontSize});
 
   @override
   State<HomeScreen> createState() => _HomeScreenState();
@@ -11,9 +11,6 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   int currentPageIndex = 0;
-  final List<Widget> pages = [
-    const OfertaScreen()
-  ];
 
   @override
   Widget build(BuildContext context) {
@@ -21,20 +18,52 @@ class _HomeScreenState extends State<HomeScreen> {
     var height = MediaQuery.of(context).size.height;
 
     return Scaffold(
-      body: SafeArea(
-        child: Container(
-          color: const Color.fromRGBO(255, 200, 255, 0.5),
-          width: width,
-          height: height,
-          child: pages[currentPageIndex],
-        ),
+      extendBodyBehindAppBar: true,
+      appBar: AppBar(
+        backgroundColor: Colors.transparent,
+        iconTheme: const IconThemeData(color: Colors.white, size: 35),
       ),
-      bottomNavigationBar: BarraNavegacao(
-        onPageChanged: (int index) {
-          setState(() {
-            currentPageIndex = index;
-          });
-        },
+      drawer: HomeMenuLateral(fontSize: widget.fontSize),
+      body: Container(
+        width: width,
+        height: height,
+        decoration: const BoxDecoration(
+          gradient: LinearGradient(
+            colors: [Color(0xFF0F2027), Color(0xFF203A43), Color(0xFF2C5364)],
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
+          ),
+        ),
+        child: Column(
+          children: [
+            SizedBox(height: kToolbarHeight + (height * 0.05)),
+            Row(
+              children: [
+                Expanded(
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Column(
+                      children: [
+                        Container(
+                          alignment: Alignment.topCenter,
+                          child: Card(
+                              color: Colors.transparent,
+                              child: Column(
+                                children: [
+                                  Image.asset(
+                                    "assets/icons/logo_peres3.png",
+                                  ),
+                                ],
+                              )),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ],
+        ),
       ),
     );
   }
