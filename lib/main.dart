@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:pi_desenv_mobile/screens/home_screen.dart';
-import 'package:pi_desenv_mobile/screens/ofertas/oferta_screen.dart';
+import 'package:peres_app/screens/home_screen.dart';
+import 'package:peres_app/screens/ofertas/oferta_screen.dart';
 
 void main() {
   runApp(const MyApp());

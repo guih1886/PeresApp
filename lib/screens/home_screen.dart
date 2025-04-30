@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:pi_desenv_mobile/components/home/home_menu_lateral.dart';
+import 'package:peres_app/components/home/home_menu_lateral.dart';
 
 class HomeScreen extends StatefulWidget {
   final double fontSize;

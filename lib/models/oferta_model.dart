@@ -7,6 +7,8 @@ class OfertaModel {
   final bool ativo;
   final bool envioPalmTop;
   final bool isRequisito;
+  final String requisitoNome;
+  final double requisitoQuantidade;
 
   OfertaModel(
       {required this.id,
@@ -16,7 +18,9 @@ class OfertaModel {
       required this.validadeAte,
       required this.ativo,
       required this.envioPalmTop,
-      required this.isRequisito
+      required this.isRequisito,
+      required this.requisitoNome,
+      required this.requisitoQuantidade,
       });
 
   factory OfertaModel.fromJson(Map<String, dynamic> json) {
@@ -27,8 +31,10 @@ class OfertaModel {
         validadeDe: DateTime.parse(json['validadeDe']),
         validadeAte: DateTime.parse(json['validadeAte']),
         ativo: json['ativo'] == 1,
-        envioPalmTop: json['envioPalmTop'] == 1,
-        isRequisito: json['isRequisito'] == 1,
+        envioPalmTop: json['envioPalmTop'] == true,
+        isRequisito: json['isRequisito'] == true,
+        requisitoNome: json['requisitoNome'],
+        requisitoQuantidade: json['requisitoQuantidade']
     );
   }
 }

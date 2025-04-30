@@ -2,8 +2,8 @@ import 'dart:convert';
 
 import 'package:http/http.dart' as http;
 
-import 'package:pi_desenv_mobile/models/produto_model.dart';
-import 'package:pi_desenv_mobile/tools/UrlTool.dart';
+import 'package:peres_app/models/produto_model.dart';
+import 'package:peres_app/tools/UrlTool.dart';
 
 class ProdutoService {
   Future<List<ProdutoModel>?> carregarProdutosByIdOferta(int id) async {
@@ -24,7 +24,6 @@ class ProdutoService {
       } else {
         return null;
       }
-
       return listaProdutos;
     } catch (e) {
       return null;

@@ -1,7 +1,7 @@
 import 'dart:convert';
 
 import 'package:http/http.dart' as http;
-import 'package:pi_desenv_mobile/tools/UrlTool.dart';
+import 'package:peres_app/tools/UrlTool.dart';
 
 import '../models/oferta_model.dart';
 

@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:pi_desenv_mobile/services/oferta_service.dart';
-import 'package:intl/intl.dart';
+import 'package:peres_app/components/ofertas/oferta_item.dart';
+import 'package:peres_app/services/oferta_service.dart';
 
 import '../../models/oferta_model.dart';
-import 'detalhe_oferta_screen.dart';
 
 class OfertaScreen extends StatefulWidget {
   final double fontSize;
@@ -29,6 +28,14 @@ class _OfertaScreenState extends State<OfertaScreen> {
     setState(() {
       if (lista != null) {
         ofertas = lista;
+      } else {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text('Erro ao carregar as ofertas. Tente novamente.'),
+            duration: Duration(seconds: 3),
+          ),
+        );
+        Navigator.pop(context);
       }
     });
   }
@@ -50,71 +57,8 @@ class _OfertaScreenState extends State<OfertaScreen> {
               itemCount: ofertas.length,
               itemBuilder: (context, index) {
                 var oferta = ofertas[index];
-                var dataFimFormatada =
-                    DateFormat("dd/MM/yyyy HH:mm").format(oferta.validadeAte);
-                return Card(
-                  color: Colors.white70,
-                  margin:
-                      const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
-                  elevation: 10,
-                  child: ListTile(
-                    leading: const Icon(
-                      Icons.discount,
-                      color: Colors.blue,
-                      size: 35,
-                    ),
-                    title: Text(oferta.descricao,
-                        style: TextStyle(
-                            fontSize: widget.fontSize * 1.2,
-                            fontWeight: FontWeight.bold)),
-                    subtitle: Column(
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      crossAxisAlignment: CrossAxisAlignment.end,
-                      children: [
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.end,
-                          children: [
-                            Text(
-                              "Código: ",
-                              style: TextStyle(
-                                  fontSize: widget.fontSize,
-                                  fontWeight: FontWeight.bold),
-                            ),
-                            Text(
-                              "${oferta.seqKit}",
-                              style: TextStyle(fontSize: widget.fontSize),
-                            ),
-                          ],
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.end,
-                          children: [
-                            Text(
-                              "Validade: ",
-                              style: TextStyle(
-                                  fontSize: widget.fontSize,
-                                  fontWeight: FontWeight.bold),
-                            ),
-                            Text(
-                              "${dataFimFormatada}",
-                              style: TextStyle(fontSize: widget.fontSize),
-                            ),
-                          ],
-                        ),
-                        oferta.isRequisito == true ? Text('Com requisito') : Row()
-                      ],
-                    ),
-                    onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) =>
-                              DetalheOfertaScreen(oferta: oferta),
-                        ),
-                      );
-                    },
-                  ),
-                );
+
+                return OfertaItem(oferta: oferta, fontSize: widget.fontSize);
               },
             ),
     );
