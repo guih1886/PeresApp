@@ -1,5 +1,5 @@
 {
   "promocoesSP": "http://guih1886.ddns.net:5030/Promocoes/PeresSP",
   "promocoesMG": "http://guih1886.ddns.net:5030/Promocoes/PeresMG",
-  "promocaoProduto": "http://guih1886.ddns.net:5030/PromocoesProduto/SeqKitProm/{seqKit}"
+  "promocaoProduto": "http://guih1886.ddns.net:5030/PromocoesProduto/SeqKitProm/{SeqKit}&Empresa={EmpresaId}"
 }

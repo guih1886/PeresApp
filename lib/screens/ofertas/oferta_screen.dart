@@ -13,54 +13,109 @@ class OfertaScreen extends StatefulWidget {
   State<OfertaScreen> createState() => _OfertaScreenState();
 }
 
-class _OfertaScreenState extends State<OfertaScreen> {
+class _OfertaScreenState extends State<OfertaScreen>
+    with SingleTickerProviderStateMixin {
+  late final TabController _tabController;
   final OfertaService ofertaService = OfertaService();
-  List<OfertaModel> ofertas = [];
+  List<OfertaModel>? ofertasSp;
+  List<OfertaModel>? ofertasMg;
 
   @override
   void initState() {
+    _tabController = TabController(length: 2, vsync: this);
     super.initState();
     carregarDados();
   }
 
   Future<void> carregarDados() async {
-    List<OfertaModel>? lista = await ofertaService.carregarOfertas();
-    setState(() {
-      if (lista != null) {
-        ofertas = lista;
-      } else {
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
-            content: Text('Erro ao carregar as ofertas. Tente novamente.'),
-            duration: Duration(seconds: 3),
-          ),
-        );
-        Navigator.pop(context);
-      }
-    });
+    try {
+      List<OfertaModel>? listaSp =
+          await ofertaService.carregarOfertas("promocoesSP");
+
+      List<OfertaModel>? listaMg =
+          await ofertaService.carregarOfertas("promocoesMG");
+
+      setState(() {
+        if (listaSp != null && listaMg != null) {
+          ofertasSp = listaSp;
+          ofertasMg = listaMg;
+        }
+      });
+    } catch (e) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('Erro ao carregar as ofertas. Tente novamente.'),
+          duration: Duration(seconds: 3),
+        ),
+      );
+      Navigator.pop(context);
+    }
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text(
-          'Ofertas',
-          style: TextStyle(color: Colors.white),
+        backgroundColor: Colors.grey,
+        appBar: AppBar(
+          title: const Text(
+            'Ofertas',
+            style: TextStyle(color: Colors.white),
+          ),
+          backgroundColor: const Color(0xFF203A43),
+          iconTheme: const IconThemeData(color: Colors.white, size: 35),
+          bottom: TabBar(
+            unselectedLabelColor: Colors.white24,
+            labelColor: Colors.white,
+            indicatorColor: Colors.white,
+            indicatorSize: TabBarIndicatorSize.tab,
+            indicatorWeight: 5,
+            labelStyle: TextStyle(
+                fontSize: widget.fontSize * 1.1, fontWeight: FontWeight.bold),
+            unselectedLabelStyle: TextStyle(
+                fontSize: widget.fontSize * 1.1, fontWeight: FontWeight.bold),
+            tabs: const <Widget>[
+              Tab(
+                text: "Peres SP",
+              ),
+              Tab(
+                text: "Peres MG",
+              ),
+            ],
+            controller: _tabController,
+          ),
         ),
-        backgroundColor: const Color(0xFF203A43),
-        iconTheme: const IconThemeData(color: Colors.white, size: 35),
-      ),
-      body: ofertas.isEmpty
-          ? const Center(child: CircularProgressIndicator())
-          : ListView.builder(
-              itemCount: ofertas.length,
-              itemBuilder: (context, index) {
-                var oferta = ofertas[index];
-
-                return OfertaItem(oferta: oferta, fontSize: widget.fontSize);
-              },
-            ),
-    );
+        body: TabBarView(
+          controller: _tabController,
+          children: <Widget>[
+            ofertasSp == null
+                ? const Center(
+                    child: CircularProgressIndicator(
+                        backgroundColor: Colors.white))
+                : ListView.builder(
+                    itemCount: ofertasSp!.length,
+                    itemBuilder: (context, index) {
+                      var oferta = ofertasSp![index];
+                      return OfertaItem(
+                        oferta: oferta,
+                        fontSize: widget.fontSize,
+                        empresaId: 1,
+                      );
+                    },
+                  ),
+            ofertasMg == null
+                ? const Center(child: CircularProgressIndicator())
+                : ListView.builder(
+                    itemCount: ofertasMg!.length,
+                    itemBuilder: (context, index) {
+                      var oferta = ofertasMg![index];
+                      return OfertaItem(
+                        oferta: oferta,
+                        fontSize: widget.fontSize,
+                        empresaId: 2,
+                      );
+                    },
+                  )
+          ],
+        ));
   }
 }

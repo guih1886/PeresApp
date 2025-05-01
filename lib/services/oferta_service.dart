@@ -6,10 +6,10 @@ import 'package:peres_app/tools/UrlTool.dart';
 import '../models/oferta_model.dart';
 
 class OfertaService {
-  Future<List<OfertaModel>?> carregarOfertas() async {
+  Future<List<OfertaModel>?> carregarOfertas(String configUrl) async {
     try {
       List<OfertaModel>? listaOfertas;
-      final promocoesUrl = await getUrlFromConfigFile("promocoesSP");
+      final promocoesUrl = await getUrlFromConfigFile(configUrl);
 
       var url = Uri.parse(promocoesUrl);
 
@@ -18,15 +18,17 @@ class OfertaService {
       if (response.statusCode == 200) {
         var dados = jsonDecode(response.body);
         listaOfertas = (dados['data'] as List)
-             .map((json) => OfertaModel.fromJson(json))
-             .toList();
+            .map((json) => OfertaModel.fromJson(json))
+            .toList();
       } else {
-        return null;
+        throw Exception(
+            "Ocorreu um problema ao carregar as ofertas. Tente novamente.");
       }
 
       return listaOfertas;
     } catch (e) {
-      return null;
+      throw Exception(
+          "Ocorreu um problema ao carregar as ofertas. Tente novamente.");
     }
   }
 }

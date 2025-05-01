@@ -1,4 +1,6 @@
+import 'dart:async';
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:http/http.dart' as http;
 
@@ -6,27 +8,35 @@ import 'package:peres_app/models/produto_model.dart';
 import 'package:peres_app/tools/UrlTool.dart';
 
 class ProdutoService {
-  Future<List<ProdutoModel>?> carregarProdutosByIdOferta(int id) async {
-    try {
-      List<ProdutoModel>? listaProdutos;
-      var promocaoProdutoUrl = await getUrlFromConfigFile("promocaoProduto");
-      promocaoProdutoUrl = promocaoProdutoUrl.replaceAll("{seqKit}", id.toString());
+  Future<List<ProdutoModel>> carregarProdutosByIdOferta(
+      int id, int empresaId) async {
+    List<ProdutoModel>? listaProdutos;
+    var promocaoProdutoUrl = await getUrlFromConfigFile("promocaoProduto");
 
-      Uri uri = Uri.parse(promocaoProdutoUrl);
+    promocaoProdutoUrl =
+        promocaoProdutoUrl.replaceAll("{SeqKit}", id.toString());
 
-      var response = await http.get(uri);
+    promocaoProdutoUrl =
+        promocaoProdutoUrl.replaceAll("{EmpresaId}", empresaId.toString());
 
-      if (response.statusCode == 200) {
-        var dados = jsonDecode(response.body);
-        listaProdutos = (dados['data'] as List)
-            .map((json) => ProdutoModel.fromJson(json))
-            .toList();
-      } else {
-        return null;
-      }
-      return listaProdutos;
-    } catch (e) {
-      return null;
+    Uri uri = Uri.parse(promocaoProdutoUrl);
+
+    var response = await http.get(uri).timeout(
+      const Duration(seconds: 120),
+      onTimeout: () {
+        throw TimeoutException(
+            "Ocorreu um problema ao carregar os produtos. Verique a internet e tente novamente.");
+      },
+    );
+
+    if (response.statusCode == 200) {
+      var dados = jsonDecode(response.body);
+      listaProdutos = (dados['data'] as List)
+          .map((json) => ProdutoModel.fromJson(json))
+          .toList();
+    } else {
+      throw const HttpException("Erro ao carregar os produtos.");
     }
+    return listaProdutos;
   }
 }

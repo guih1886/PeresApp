@@ -40,7 +40,7 @@ class ProdutoModel {
         descricao: json['descricao'],
         descricaoResumida: json['descricaoResumida'],
         valor: precoFixo > 0 ? precoFixo : 0,
-        imagem: "",
+        imagem: json['urlImagem'],
         estoque: estoque,
         qtdVendaMin: vendaMin,
         qtdVendaMult: vendaMult,

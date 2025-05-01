@@ -8,7 +8,9 @@ class OfertaItem extends StatelessWidget {
   final OfertaModel oferta;
   final double fontSize;
 
-  const OfertaItem({super.key, required this.oferta, required this.fontSize});
+  final int empresaId;
+
+  const OfertaItem({super.key, required this.oferta, required this.fontSize, required this.empresaId});
 
   @override
   Widget build(BuildContext context) {
@@ -16,7 +18,7 @@ class OfertaItem extends StatelessWidget {
     DateFormat("dd/MM/yyyy HH:mm").format(oferta.validadeAte);
 
     return Card(
-      color: Colors.white70,
+      color: Colors.white,
       margin:
       const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
       elevation: 10,
@@ -97,7 +99,7 @@ class OfertaItem extends StatelessWidget {
             context,
             MaterialPageRoute(
               builder: (context) =>
-                  DetalheOfertaScreen(oferta: oferta, fontSize: fontSize),
+                  DetalheOfertaScreen(oferta: oferta, fontSize: fontSize, empresaId: empresaId),
             ),
           );
         },

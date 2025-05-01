@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
 import '../../models/produto_model.dart';
-import '../../screens/produtos/detalhe_produto.dart';
+import '../../screens/produtos/detalhe_produto_screen.dart';
 
 class ProdutoItem extends StatelessWidget {
   final List<ProdutoModel>? produtos;
@@ -23,12 +23,13 @@ class ProdutoItem extends StatelessWidget {
             Navigator.push(
               context,
               MaterialPageRoute(
-                builder: (context) => DetalheProduto(produto: produto),
+                builder: (context) =>
+                    DetalheProdutoScreen(produto: produto, fontSize: fontSize),
               ),
             );
           },
           child: Card(
-            color: Colors.white70,
+            color: Colors.white,
             margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
             elevation: 10,
             shape:
@@ -39,11 +40,19 @@ class ProdutoItem extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   ListTile(
-                    leading: Expanded(
-                        child: Image.asset(
-                      "assets/icons/logo_peres.png",
-                      fit: BoxFit.fill,
-                    )),
+                    leading: SizedBox(
+                        width: 80,
+                        height: 200,
+                        child: Image.network(
+                          produto.imagem,
+                          fit: BoxFit.fill,
+                          errorBuilder: (context, error, stackTrace) {
+                            return Image.asset(
+                              'assets/images/sem_imagem.jpg',
+                              fit: BoxFit.fill,
+                            );
+                          },
+                        )),
                     title: Text(
                       produto.descricao.toUpperCase(),
                       style: TextStyle(
