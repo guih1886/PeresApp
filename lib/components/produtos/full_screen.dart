@@ -21,7 +21,9 @@ class FullScreenImagePage extends StatelessWidget {
       body: GestureDetector(
         onTap: () => Navigator.pop(context),
         child: Center(
-          child: InteractiveViewer(
+          child: SizedBox(
+            width: width,
+            height: height * 0.8,
             child: Image.network(
               imageUrl,
               width: width,
@@ -31,6 +33,7 @@ class FullScreenImagePage extends StatelessWidget {
           ),
         ),
       ),
+
     );
   }
 

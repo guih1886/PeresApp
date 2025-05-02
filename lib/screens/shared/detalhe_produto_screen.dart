@@ -141,20 +141,20 @@ class _DetalheProdutoScreenState extends State<DetalheProdutoScreen>
                           ),
                         ],
                       ),
-                      CustomInput(label: "SEÇÃO", text: "", width: width),
-                      CustomInput(label: "CATEGORIA", text: "", width: width),
-                      CustomInput(label: "FABRICANTE", text: "", width: width),
+                      CustomInput(label: "SEÇÃO", text: widget.produto.secao, width: width),
+                      CustomInput(label: "CATEGORIA", text: widget.produto.categoria, width: width),
+                      CustomInput(label: "FABRICANTE", text: widget.produto.fabricante, width: width),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
                           CustomInput(
                             label: "PESO BRT. (g)",
-                            text: "",
+                            text: widget.produto.pesoBrt,
                             width: width * 0.45,
                           ),
                           CustomInput(
                             label: "PESO LIQ. (g)",
-                            text: "",
+                            text: widget.produto.pesoLiq,
                             width: width * 0.45,
                           ),
                         ],
@@ -164,10 +164,10 @@ class _DetalheProdutoScreenState extends State<DetalheProdutoScreen>
                         children: [
                           CustomInput(
                               label: "UNID. COMPRA",
-                              text: "",
+                              text: widget.produto.unidCompra,
                               width: width * 0.45),
                           CustomInput(
-                              label: "NCM", text: "", width: width * 0.45),
+                              label: "NCM", text: widget.produto.ncm, width: width * 0.45),
                         ],
                       ),
                     ],
@@ -176,7 +176,14 @@ class _DetalheProdutoScreenState extends State<DetalheProdutoScreen>
                 Padding(
                   padding: const EdgeInsets.only(top: 8),
                   child: Column(
-                    children: [_barcodeRow("UN", "TIPO", "52656832329", width)],
+                    children: widget.produto.codigosBarras
+                        .map((codigoBarra) => _barcodeRow(
+                      codigoBarra.unidadeVenda,
+                      codigoBarra.tipoCodigoBarra,
+                      codigoBarra.codigoBarra ?? '',
+                      width,
+                    ))
+                        .toList(),
                   ),
                 )
               ],

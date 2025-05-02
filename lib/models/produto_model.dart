@@ -1,3 +1,5 @@
+import 'package:peres_app/models/codigos_barra_unidade_produto.dart';
+
 class ProdutoModel {
   final int id;
   final int codigoProduto;
@@ -9,6 +11,14 @@ class ProdutoModel {
   final double qtdVendaMin;
   final double qtdVendaMult;
   final String fatorEstoque;
+  final String unidCompra;
+  final String ncm;
+  final String pesoLiq;
+  final String pesoBrt;
+  final String secao;
+  final String categoria;
+  final String fabricante;
+  final List<CodigosBarraUnidadeProdutoModel> codigosBarras;
 
   final double percentDesc;
 
@@ -23,7 +33,15 @@ class ProdutoModel {
     required this.qtdVendaMin,
     required this.qtdVendaMult,
     required this.fatorEstoque,
+    required this.unidCompra,
+    required this.ncm,
+    required this.pesoLiq,
+    required this.pesoBrt,
+    required this.secao,
+    required this.categoria,
+    required this.fabricante,
     required this.percentDesc,
+    required this.codigosBarras,
   });
 
   factory ProdutoModel.fromJson(Map<String, dynamic> json) {
@@ -45,7 +63,17 @@ class ProdutoModel {
         qtdVendaMin: vendaMin,
         qtdVendaMult: vendaMult,
         fatorEstoque: json['fatorEstoque'],
-        percentDesc: precoFixo > 0 ? 0 : percentual
+        percentDesc: precoFixo > 0 ? 0 : percentual,
+        categoria: json['categoria'] ?? "teste",
+        fabricante: json['fabricante'],
+        ncm: json['ncm'],
+        pesoBrt: json['pesoBrt'],
+        pesoLiq: json['pesoLiq'],
+        secao: json['secao'] ?? "teste",
+        unidCompra: json['unidCompra'],
+      codigosBarras: (json['codigosBarras'] as List)
+        .map((e) => CodigosBarraUnidadeProdutoModel.fromJson(e))
+        .toList(),
     );
   }
 }
