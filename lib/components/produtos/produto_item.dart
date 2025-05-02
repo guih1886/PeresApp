@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
 import '../../models/produto_model.dart';
-import '../../screens/produtos/detalhe_produto_screen.dart';
+import '../../screens/shared/detalhe_produto_screen.dart';
 
 class ProdutoItem extends StatelessWidget {
   final List<ProdutoModel>? produtos;
@@ -79,12 +79,25 @@ class ProdutoItem extends StatelessWidget {
                               fontWeight: FontWeight.bold),
                         ),
                         const SizedBox(height: 8),
-                        Text(
-                          "Estoque: ${produto.estoque} ${produto.fatorEstoque}",
-                          style: TextStyle(
-                              fontSize: fontSize,
-                              color: Colors.black54,
-                              fontWeight: FontWeight.bold),
+                        Row(
+                          children: [
+                            Text(
+                              "Estoque: ",
+                              style: TextStyle(
+                                  fontSize: fontSize,
+                                  color: Colors.black54,
+                                  fontWeight: FontWeight.bold),
+                            ),
+                            Text(
+                              "${produto.estoque.toInt()} ${produto.fatorEstoque}",
+                              style: TextStyle(
+                                  fontSize: fontSize,
+                                  color: produto.estoque > 0
+                                      ? Colors.indigoAccent
+                                      : Colors.red,
+                                  fontWeight: FontWeight.bold),
+                            ),
+                          ],
                         ),
                       ],
                     ),
