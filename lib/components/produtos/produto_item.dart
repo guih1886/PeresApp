@@ -119,7 +119,7 @@ class ProdutoItem extends StatelessWidget {
                             Row(
                               children: [
                                 Text(
-                                  NumberFormat.simpleCurrency(locale: 'pt_BR')
+                                  NumberFormat.simpleCurrency(locale: 'pt_BR', decimalDigits: 3)
                                       .format(produto.valor),
                                   style: TextStyle(fontSize: fontSize),
                                 ),
@@ -142,9 +142,8 @@ class ProdutoItem extends StatelessWidget {
                             Row(
                               children: [
                                 Text(
-                                  produto.percentDesc
-                                      .toStringAsFixed(2)
-                                      .replaceAll(".", ","),
+                                  (produto.percentDesc * 100)
+                                      .toStringAsFixed(2),
                                   style: TextStyle(fontSize: fontSize),
                                 ),
                               ],
@@ -166,7 +165,7 @@ class ProdutoItem extends StatelessWidget {
                             Row(
                               children: [
                                 Text(
-                                  NumberFormat.simpleCurrency(locale: 'pt_BR')
+                                  NumberFormat.simpleCurrency(locale: 'pt_BR',decimalDigits: 3)
                                       .format(produto.valor -
                                           (produto.valor *
                                               produto.percentDesc)),

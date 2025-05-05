@@ -47,6 +47,7 @@ class ProdutoModel {
   factory ProdutoModel.fromJson(Map<String, dynamic> json) {
     var precoFixo = json['precoFixo'];
     var percentual = json['percentualDesconto'];
+    var precoBase = json['valorBase'];
 
     double vendaMin = double.parse(json['qtdeMinVenda'].toString());
     double vendaMult = double.parse(json['qtdeMultVenda'].toString());
@@ -57,7 +58,7 @@ class ProdutoModel {
         codigoProduto: json['codigoProduto'],
         descricao: json['descricao'],
         descricaoResumida: json['descricaoResumida'],
-        valor: precoFixo > 0 ? precoFixo : 0,
+        valor: precoFixo > 0 ? precoFixo : precoBase,
         imagem: json['urlImagem'],
         estoque: estoque,
         qtdVendaMin: vendaMin,

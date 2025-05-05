@@ -10,17 +10,20 @@ class OfertaItem extends StatelessWidget {
 
   final int empresaId;
 
-  const OfertaItem({super.key, required this.oferta, required this.fontSize, required this.empresaId});
+  const OfertaItem(
+      {super.key,
+      required this.oferta,
+      required this.fontSize,
+      required this.empresaId});
 
   @override
   Widget build(BuildContext context) {
     var dataFimFormatada =
-    DateFormat("dd/MM/yyyy HH:mm").format(oferta.validadeAte);
+        DateFormat("dd/MM/yyyy HH:mm").format(oferta.validadeAte);
 
     return Card(
       color: Colors.white,
-      margin:
-      const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+      margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
       elevation: 10,
       child: ListTile(
         leading: const Icon(
@@ -30,7 +33,7 @@ class OfertaItem extends StatelessWidget {
         ),
         title: Text(oferta.descricao,
             style: TextStyle(
-              color: Colors.indigoAccent,
+                color: Colors.indigoAccent,
                 fontSize: fontSize * 1.2,
                 fontWeight: FontWeight.bold)),
         subtitle: Column(
@@ -43,8 +46,7 @@ class OfertaItem extends StatelessWidget {
                 Text(
                   "Código: ",
                   style: TextStyle(
-                      fontSize: fontSize,
-                      fontWeight: FontWeight.bold),
+                      fontSize: fontSize, fontWeight: FontWeight.bold),
                 ),
                 Text(
                   "${oferta.seqKit}",
@@ -58,8 +60,7 @@ class OfertaItem extends StatelessWidget {
                 Text(
                   "Validade: ",
                   style: TextStyle(
-                      fontSize: fontSize,
-                      fontWeight: FontWeight.bold),
+                      fontSize: fontSize, fontWeight: FontWeight.bold),
                 ),
                 Text(
                   dataFimFormatada,
@@ -67,39 +68,54 @@ class OfertaItem extends StatelessWidget {
                 ),
               ],
             ),
-            oferta.isRequisito == true &&
-                oferta.requisitoQuantidade > 1.0
-                ? Row(
+            Row(
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
-                Text(
-                  "REQUISITO - ",
-                  style: TextStyle(
-                      fontSize: fontSize,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.red),
-                ),
-                Text(
-                  "${oferta.requisitoNome}: ",
-                  style: TextStyle(
-                      fontSize: fontSize,
-                      fontWeight: FontWeight.bold),
-                ),
-                Text(
-                  "${oferta.requisitoQuantidade.toInt()}",
-                  style: TextStyle(fontSize: fontSize),
-                ),
+                Column(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  crossAxisAlignment: CrossAxisAlignment.end,
+                  children: [
+                    ...oferta.requisitos.map((e) {
+                      if(e.valorRequisito > 1){
+                        return Row(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          crossAxisAlignment: CrossAxisAlignment.end,
+                          children: [
+                            Text(
+                              "REQUISITO - ",
+                              style: TextStyle(
+                                  fontSize: fontSize,
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.red),
+                            ),
+                            Text(
+                              "${e.requisitoPromocao.descricao}: ",
+                              style: TextStyle(
+                                  fontSize: fontSize,
+                                  fontWeight: FontWeight.bold),
+                            ),
+                            Text(
+                              "${e.valorRequisito.toInt()}",
+                              style: TextStyle(fontSize: fontSize),
+                            ),
+                          ],
+                        );
+                      } else  {
+                        return const Row();
+                      }
+                    })
+                  ],
+                )
               ],
             )
-                : const Row()
           ],
         ),
         onTap: () {
           Navigator.push(
             context,
             MaterialPageRoute(
-              builder: (context) =>
-                  DetalheOfertaScreen(oferta: oferta, fontSize: fontSize, empresaId: empresaId),
+              builder: (context) => DetalheOfertaScreen(
+                  oferta: oferta, fontSize: fontSize, empresaId: empresaId),
             ),
           );
         },
